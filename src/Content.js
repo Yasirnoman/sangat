@@ -22,6 +22,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { InputTextarea } from 'primereact/inputtextarea';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
+import { Calendar } from 'primereact/calendar';
 
 
 function Content() {
@@ -30,12 +31,12 @@ function Content() {
     const [Email, setEmail] = React.useState("");
     const [Phonenumber, setPhonenumber] = React.useState("");
     const [Address, setAddress] = React.useState("");
-    const [HowMuchDonate, setHowMuchDonate] = React.useState("");
+    const [Donation, setDonation] = React.useState("");
     const [open, setOpen] = React.useState(false);
     const [isEditMode, setIsEditMode] = React.useState(false);
     const [loading1, setLoading1] = React.useState(false);
     const [idForEdit] = React.useState(null);
-    const [formData,setFormData]=useState(Username,Email,Phonenumber,Address,HowMuchDonate)
+    const [date, setDate] = React.useState(null)
     let navigate = useNavigate();
 
 
@@ -44,34 +45,23 @@ function Content() {
         setUserName("")
         setEmail("")
         setPhonenumber("")
+        setDate("")
         setAddress("")
-        setHowMuchDonate("")
+        setDonation("")
        
       }
      
 
-      const HandleSumbit=(e)=>{
-        e.preventDefault();
-        const apiUrl=`http://localhost:5000/api/Donation/`;
-        axios.post(apiUrl,formData)
-        .then((response)=>{
-            console.log("Your information has been saved");
-        })
-        .catch((error)=>{
-            console.error("data has not been saved successfully",error);
-        });
-      };
-
-
 
     const saveUserDonations = async () => {
-        if (Username != "" && Email != "" && Phonenumber != "" && HowMuchDonate != "" && Address != "") {
+        if (Username != "" && Email != "" && Phonenumber != "" && Donation != "" && Address != "" && date !="") {
           setLoading1(true);
           let obj = {
             name: Username,
             email: Email,
             phonenumber: Phonenumber,
-           HowmuchDonate: HowMuchDonate,
+            date :date,
+           Donation: Donation,
             Address: Address,
            
           }
@@ -92,6 +82,7 @@ function Content() {
             setOpen(false)
             setIsEditMode(false)
             clearFields()
+            console.log(response)
           }
           else {
             toast.current.show({ severity: 'error', summary: 'Error Message', detail: 'data has not been saved successfully', life: 3000 });
@@ -134,7 +125,12 @@ function Content() {
                     </div>
                     <br />
 
-                    <input type="Numbers" className="form-control margin" value={HowMuchDonate} onChange={(e) => setHowMuchDonate(e.target.value)} placeholder="How Much To Donate" id="validationCustom03" required />
+                    <div className="flex justify-content-center ">
+                <Calendar className='p-component1 calendar' placeholder='Enter Date' value={Date} onChange={(e) => setDate(e.target.value)} dateFormat="dd/mm/yy" />
+              </div>
+              <br />
+
+                    <input type="Numbers" className="form-control margin" value={Donation} onChange={(e) => setDonation(e.target.value)} placeholder="How Much To Donate" id="validationCustom03" required />
                     <div className="invalid-feedback">
                         Please provide a valid Donation.
                     </div>

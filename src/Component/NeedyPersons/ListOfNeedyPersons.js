@@ -67,6 +67,7 @@ const DataViewDemo = (props) => {
         )
     }
 
+    
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
         let _filters = { ...filters };

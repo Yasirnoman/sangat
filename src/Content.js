@@ -37,6 +37,8 @@ function Content() {
     const [loading1, setLoading1] = React.useState(false);
     const [idForEdit] = React.useState(null);
     const [date, setDate] = React.useState(null)
+    
+    const [date1, setDate1] = React.useState(null)
     let navigate = useNavigate();
 
 
